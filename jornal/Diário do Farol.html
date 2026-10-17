@@ -1,0 +1,746 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Diário do Farol</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=UnifrakturMaguntia&display=swap">
+<style>
+/* Layout: primeira página em três colunas separadas por fios finos (esquerda, destaque, direita); matéria em coluna única de leitura. */
+:root{
+  --paper:#fdfdfc;--ink:#141414;--ink2:#505050;--hair:#dcdcd8;--soft:#f2f2ef;--accent:#1c4f82;
+  --a1:#15222e;--a2:#586f83;--a3:#cdd7de;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"Libre Franklin","Helvetica Neue",Arial,sans-serif;
+  --black:"UnifrakturMaguntia","Old English Text MT",Georgia,serif;
+  --fs:1.15rem;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--paper:#131415;--ink:#ecebe7;--ink2:#a9a8a2;--hair:#34373a;--soft:#1c1e20;--accent:#86b6e8;--a1:#0a1016;--a2:#3d5163;--a3:#8da2b3;color-scheme:dark}
+}
+:root[data-theme="dark"]{--paper:#131415;--ink:#ecebe7;--ink2:#a9a8a2;--hair:#34373a;--soft:#1c1e20;--accent:#86b6e8;--a1:#0a1016;--a2:#3d5163;--a3:#8da2b3;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.5;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--paper);z-index:60}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+h1,h2,h3,p,ul,ol,figure,blockquote{margin:0}
+::selection{background:var(--accent);color:var(--paper)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main:focus{outline:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.hl:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+
+/* topo e logotipo */
+.top{border-bottom:3px double var(--ink)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;padding-block:10px;font:500 12px/1.3 var(--sans);letter-spacing:.02em}
+.tools{display:flex;gap:6px;flex-wrap:wrap}
+.btn{background:none;border:1px solid var(--hair);padding:6px 11px;font:600 12px/1.2 var(--sans);border-radius:2px;letter-spacing:.02em}
+.btn:hover{border-color:var(--ink)}
+.btn--solid{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn--solid:hover{opacity:.88}
+.btn[aria-pressed="true"]{background:var(--soft);border-color:var(--ink)}
+.mast{text-align:center;padding-block:10px 14px}
+.logo{display:inline-block;font:400 clamp(2.7rem,9vw,5.6rem)/1 var(--black);letter-spacing:.01em}
+.tag{margin-top:6px;font:italic 400 14px/1.3 var(--serif);color:var(--ink2)}
+
+/* navegação das seções */
+.sections{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);border-bottom:1px solid var(--ink)}
+.sections ul{display:flex;gap:2px;list-style:none;padding:0;margin:0;overflow-x:auto;scrollbar-width:none}
+.sections ul::-webkit-scrollbar{display:none}
+.sections a{display:block;padding:11px 12px;font:600 12px/1 var(--sans);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+.sections a:hover{color:var(--accent)}
+.sections a[aria-current="page"]{color:var(--accent);box-shadow:inset 0 -3px 0 var(--accent)}
+.prog{position:absolute;left:0;bottom:-1px;height:3px;width:0;background:var(--accent)}
+
+main{padding-bottom:20px}
+.ticker{display:flex;align-items:center;gap:18px;padding-block:9px;border-bottom:1px solid var(--hair);font:500 13px/1.3 var(--sans);overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.ticker b{font:700 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.ticker time{color:var(--ink2);margin-right:6px;font-variant-numeric:tabular-nums}
+
+/* componentes de matéria */
+.kicker{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+.meta{font:500 11.5px/1.4 var(--sans);color:var(--ink2);letter-spacing:.02em}
+.story{padding-block:14px;border-bottom:1px solid var(--hair)}
+.story:first-child{padding-top:0}
+.story:last-child{border-bottom:0}
+.story h3,.row h3{font:600 1.2rem/1.18 var(--serif);margin-bottom:6px;text-wrap:balance}
+.story p,.row p{font-size:.95rem;line-height:1.45;color:var(--ink2);margin-bottom:7px}
+.figlink{display:block;margin-bottom:10px}
+.art{display:block;width:100%;max-width:100%;aspect-ratio:3/2;background:var(--a3)}
+.fig figcaption{margin-top:6px;font:400 11.5px/1.35 var(--sans);color:var(--ink2)}
+.fig figcaption span{text-transform:uppercase;letter-spacing:.06em;font-size:10px;margin-left:4px}
+.row{display:grid;grid-template-columns:minmax(0,38%) minmax(0,1fr);gap:14px;padding-block:14px;border-bottom:1px solid var(--hair)}
+.row:first-of-type{padding-top:4px}
+.row:last-child{border-bottom:0}
+.row .figlink{margin:0}
+.row .art{aspect-ratio:4/3}
+.hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-top:2px solid var(--ink);padding-top:8px;margin-bottom:10px;font:700 12px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.hd .more{font-weight:600;letter-spacing:.04em;text-transform:none;color:var(--accent)}
+.hd .more:hover{text-decoration:underline}
+.mt{margin-top:26px}
+
+/* primeira página */
+.front{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.15fr) minmax(0,1fr);padding-top:20px}
+.front>*{padding-inline:20px;min-width:0}
+.front>:first-child{padding-left:0}
+.front>:last-child{padding-right:0}
+.front>*+*{border-left:1px solid var(--hair)}
+.lead h1{font:700 clamp(2.05rem,4.3vw,3.15rem)/1.04 var(--serif);letter-spacing:-.012em;margin-bottom:12px;text-wrap:balance}
+.leaddeck{font:400 clamp(1.05rem,1.8vw,1.22rem)/1.4 var(--serif);color:var(--ink2);margin-bottom:10px}
+.lead .meta{display:block;margin-bottom:14px}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:22px;border-top:1px solid var(--hair);padding-top:16px}
+.duo>*{padding-inline:16px;border-bottom:0}
+.duo>:first-child{padding-left:0}
+.duo>:last-child{padding-right:0;border-left:1px solid var(--hair)}
+.op{padding-block:11px;border-bottom:1px solid var(--hair)}
+.op:last-of-type{border-bottom:0}
+.op .by{font:italic 500 .92rem/1.2 var(--serif);color:var(--ink2);margin-bottom:3px}
+.op h3{font:600 1.08rem/1.22 var(--serif);text-wrap:balance}
+.ml{counter-reset:ml;list-style:none;padding:0}
+.ml li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;padding-block:10px;border-bottom:1px solid var(--hair);align-items:start}
+.ml li:last-child{border-bottom:0}
+.ml li::before{counter-increment:ml;content:counter(ml);font:600 1.6rem/1 var(--serif);color:var(--ink2)}
+.ml a{font:600 .98rem/1.25 var(--serif)}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:30px}
+.pair>section{padding-inline:20px;min-width:0}
+.pair>section:first-child{padding-left:0}
+.pair>section:last-child{padding-right:0;border-left:1px solid var(--hair)}
+.news{margin-top:34px;padding:26px 16px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);text-align:center}
+.news h2{font:600 clamp(1.5rem,3vw,2rem)/1.15 var(--serif);margin-bottom:6px}
+.news p{max-width:34em;margin:0 auto 14px;color:var(--ink2)}
+
+/* páginas de seção */
+.sh{padding:26px 0 14px;border-bottom:1px solid var(--ink);margin-bottom:18px}
+.sh h1{font:700 clamp(2.2rem,6vw,3.6rem)/1 var(--serif);letter-spacing:-.015em}
+.sh p{margin-top:6px;font:italic 400 1.05rem/1.4 var(--serif);color:var(--ink2)}
+.secgrid{display:grid;grid-template-columns:minmax(0,2.3fr) minmax(0,1fr);gap:0}
+.secgrid>*{min-width:0}
+.secgrid>aside{padding-left:22px;border-left:1px solid var(--hair)}
+.secgrid>div{padding-right:22px}
+.slead{padding-bottom:16px;margin-bottom:6px;border-bottom:1px solid var(--hair)}
+.slead h2{font:700 clamp(1.7rem,3.4vw,2.4rem)/1.07 var(--serif);margin:4px 0 8px;text-wrap:balance}
+.slead p{font-size:1.08rem;color:var(--ink2);margin-bottom:8px}
+.oplist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px}
+.opc{border-top:3px solid var(--ink);padding:12px 0 22px}
+.opc .by{font:600 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.opc h2{font:italic 600 1.55rem/1.15 var(--serif);margin-bottom:10px;text-wrap:balance}
+.opc p{color:var(--ink2);margin-bottom:10px}
+.empty{padding:40px 0;text-align:center;color:var(--ink2);font-size:1.1rem}
+
+/* matéria */
+.ah{max-width:760px;margin:0 auto;padding-top:30px}
+.ah .kicker{text-align:center}
+.ah h1{font:700 clamp(2rem,5vw,3.15rem)/1.08 var(--serif);letter-spacing:-.012em;text-align:center;text-wrap:balance;margin-bottom:12px}
+.ah .deck{font:italic 400 clamp(1.1rem,2.2vw,1.35rem)/1.4 var(--serif);text-align:center;color:var(--ink2);max-width:34em;margin:0 auto 18px;text-wrap:balance}
+.byline{display:flex;justify-content:space-between;align-items:center;gap:10px 14px;flex-wrap:wrap;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding-block:10px;margin-bottom:22px;font:500 12.5px/1.4 var(--sans);color:var(--ink2)}
+.byline strong{display:block;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.acts{display:flex;gap:6px;flex-wrap:wrap}
+.hero{max-width:980px;margin:0 auto 28px}
+.hero .art{aspect-ratio:16/9}
+.abody{max-width:660px;margin:0 auto;font-size:var(--fs);line-height:1.62}
+.abody>p{margin-bottom:1.1em}
+.abody>p:first-child::first-letter{float:left;font:700 3.6em/.8 var(--serif);padding:.08em .1em 0 0}
+.pq{margin:1.6em 0;padding:.9em 0;border-top:3px solid var(--ink);border-bottom:1px solid var(--hair);text-align:center}
+.pq p{font:italic 500 1.5em/1.25 var(--serif);text-wrap:balance}
+.pq footer{margin-top:.6em;font:600 .62em/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.note{max-width:660px;margin:28px auto 0;padding-top:12px;border-top:1px solid var(--hair);font:400 12px/1.5 var(--sans);color:var(--ink2)}
+.more{max-width:1000px;margin:44px auto 0}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.cols3>*{padding-inline:20px}
+.cols3>:first-child{padding-left:0}
+.cols3>:last-child{padding-right:0}
+.cols3>*+*{border-left:1px solid var(--hair)}
+.cols3 .story{border-bottom:0;padding-top:0}
+
+/* busca e cadastro */
+.overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.52);display:flex;justify-content:center;align-items:flex-start;padding:calc(env(safe-area-inset-top,0px) + 16px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 16px) max(16px,env(safe-area-inset-left,0px))}
+.sheet{width:min(740px,100%);max-height:100%;overflow:auto;background:var(--paper);color:var(--ink);border-top:3px solid var(--ink);padding:20px}
+.sheet.narrow{width:min(520px,100%)}
+.sheet-h{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+.sheet input[type="search"],.sheet input[type="email"]{width:100%;min-width:0;font:500 1.25rem/1.3 var(--serif);padding:9px 2px;background:transparent;color:var(--ink);border:0;border-bottom:2px solid var(--ink);border-radius:0}
+.sheet input::placeholder{color:var(--ink2)}
+.sheet h2{font:700 1.7rem/1.15 var(--serif);margin-bottom:6px}
+.sheet p{color:var(--ink2)}
+.sheet label{font:600 12px/1.3 var(--sans);letter-spacing:.04em}
+.sheet form{display:grid;gap:14px;margin-top:14px}
+.sheet fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
+.sheet legend{font:700 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;padding:0}
+.chk{display:flex;gap:9px;align-items:flex-start;font:400 14px/1.4 var(--sans)!important;letter-spacing:0!important}
+.chk input{margin-top:3px;accent-color:var(--accent)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.err{min-height:1.2em;font:600 13px/1.3 var(--sans);color:#b3261e}
+:root[data-theme="dark"] .err{color:#ff8a80}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .err{color:#ff8a80}}
+.fine{font:400 12px/1.4 var(--sans)}
+.sr-item{padding-block:12px;border-bottom:1px solid var(--hair)}
+.sr-item h3{font:600 1.15rem/1.22 var(--serif)}
+.sr-item p{font-size:.95rem;color:var(--ink2);margin-top:3px}
+.hint{font:500 13px/1.4 var(--sans);color:var(--ink2);margin-bottom:6px}
+
+footer{margin-top:44px;border-top:3px double var(--ink);padding-block:22px 36px;font:400 13px/1.55 var(--sans);color:var(--ink2)}
+.fgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.fgrid h4{margin:0 0 8px;font:700 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.fgrid ul{list-style:none;padding:0;margin:0;display:grid;gap:5px}
+.fgrid a:hover,.fgrid button:hover{color:var(--ink);text-decoration:underline}
+.fgrid button{background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left}
+.copy{margin-top:20px;padding-top:12px;border-top:1px solid var(--hair)}
+
+#toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,12px);max-width:calc(100% - 32px);background:var(--ink);color:var(--paper);padding:10px 16px;font:600 13px/1.3 var(--sans);border-radius:2px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:120}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@keyframes rise{from{opacity:.001;transform:translateY(6px)}to{opacity:1;transform:none}}
+main>*{animation:rise .28s ease-out}
+@media (prefers-reduced-motion:reduce){main>*{animation:none}#toast{transition:none}}
+
+@media (max-width:980px){
+  .front{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .front>.col-c{grid-column:1/-1;order:-1;border-left:0;padding:0 0 20px;margin-bottom:20px;border-bottom:1px solid var(--hair)}
+  .oplist{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .pair{grid-template-columns:1fr}
+  .pair>section{padding-inline:0}
+  .pair>section:last-child{border-left:0;margin-top:26px}
+  .secgrid{grid-template-columns:1fr}
+  .secgrid>div{padding-right:0}
+  .secgrid>aside{padding-left:0;border-left:0;margin-top:26px}
+  .cols3{grid-template-columns:1fr;gap:6px}
+  .cols3>*{padding-inline:0}
+  .cols3>*+*{border-left:0;border-top:1px solid var(--hair);padding-top:14px}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .oplist{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .front{grid-template-columns:1fr}
+  .front>*{padding-inline:0}
+  .front>*+*{border-left:0;border-top:1px solid var(--hair);padding-top:16px;margin-top:18px}
+  .front>.col-c{margin-bottom:0;padding-bottom:20px;border-top:0;margin-top:0}
+  .duo{grid-template-columns:1fr}
+  .duo>*{padding-inline:0}
+  .duo>:last-child{border-left:0;border-top:1px solid var(--hair);padding-top:14px;margin-top:6px}
+  .abody>p:first-child::first-letter{font-size:3.2em}
+}
+@media (max-width:480px){
+  .row{grid-template-columns:1fr;gap:8px}
+  .fgrid{grid-template-columns:1fr}
+  .sheet{padding:16px}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><pattern id="ht" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.1" fill="var(--a1)" opacity=".15"/></pattern></defs></svg>
+
+<header class="top">
+  <div class="bar wrap">
+    <span><span id="today"></span> · Edição digital</span>
+    <div class="tools">
+      <button class="btn" data-act="search" type="button">Buscar</button>
+      <button class="btn" data-act="theme" id="themebtn" type="button">Modo escuro</button>
+      <button class="btn btn--solid" data-act="sub" type="button">Receber newsletters</button>
+    </div>
+  </div>
+  <div class="mast wrap">
+    <a class="logo" href="#inicio" data-r="inicio">Diário do Farol</a>
+    <p class="tag">Notícia apurada, texto claro.</p>
+  </div>
+</header>
+<nav class="sections" aria-label="Seções">
+  <div class="wrap"><ul id="navlist"></ul></div>
+  <div class="prog" id="prog"></div>
+</nav>
+<main id="app" class="wrap" tabindex="-1"></main>
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><h4>Seções</h4><ul id="fsecs"></ul></div>
+      <div><h4>Leitura</h4><ul>
+        <li><a href="#salvos" data-r="salvos">Matérias salvas</a></li>
+        <li><button type="button" data-act="search">Buscar no jornal</button></li>
+        <li><button type="button" data-act="sub">Newsletters</button></li>
+        <li><button type="button" data-act="theme" id="themebtn2">Modo escuro</button></li>
+      </ul></div>
+      <div><h4>Sobre esta edição</h4><p>Edição de demonstração. Pessoas, instituições e acontecimentos citados são fictícios, e as imagens são ilustrações geradas na própria página.</p></div>
+    </div>
+    <p class="copy">© 2026 Diário do Farol. Todos os direitos reservados a este projeto de demonstração.</p>
+  </div>
+</footer>
+
+<div id="search" class="overlay" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="Buscar no jornal">
+    <div class="sheet-h">
+      <label class="sr" for="q">Buscar</label>
+      <input id="q" type="search" placeholder="Buscar notícias, colunistas e seções" autocomplete="off">
+      <button class="btn" type="button" data-act="close">Fechar</button>
+    </div>
+    <div id="sres" aria-live="polite"></div>
+  </div>
+</div>
+<div id="sub" class="overlay" hidden>
+  <div class="sheet narrow" role="dialog" aria-modal="true" aria-labelledby="subt"><div id="subbody"></div></div>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- dados ---------- */
+var SECS=[
+ {id:"brasil",name:"Brasil",desc:"Cidades, educação e a vida no país."},
+ {id:"mundo",name:"Mundo",desc:"O que acontece além das fronteiras e como isso chega aqui."},
+ {id:"economia",name:"Economia",desc:"Empregos, preços, crédito e negócios."},
+ {id:"tecnologia",name:"Tecnologia",desc:"Ferramentas, plataformas e seus efeitos no dia a dia."},
+ {id:"ciencia",name:"Ciência",desc:"Pesquisas, descobertas e as pessoas que as fazem."},
+ {id:"saude",name:"Saúde",desc:"Prevenção, tratamento e saúde pública."},
+ {id:"cultura",name:"Cultura",desc:"Cinema, livros, música e artes."},
+ {id:"esportes",name:"Esportes",desc:"Campeonatos, atletas e bastidores."},
+ {id:"opiniao",name:"Opinião",desc:"Colunas e ensaios assinados. As opiniões são dos autores."}
+];
+
+var A=[
+{id:"b1",sec:"brasil",ago:42,by:"Helena Prado",art:"field",
+ t:"Estiagem prolongada leva cidades do interior a rever como distribuem água",
+ d:"Rodízios, reuso e redes mais curtas deixam de ser planos de emergência e viram política permanente em municípios de médio porte.",
+ cap:"Reservatório com nível baixo em período de estiagem.",
+ body:[
+ "Há três meses, o reservatório que abastece Vale Alto, cidade de 94 mil habitantes, opera com menos da metade da capacidade. O que começou como rodízio emergencial virou rotina: cada bairro recebe água em dias alternados, e a caixa-d’água, antes item de reforma, passou a ser tratada como infraestrutura básica das casas.",
+ "A mudança não é só de calendário. A companhia municipal de saneamento reduziu em um terço as perdas na rede, trocando tubulações com mais de quarenta anos, e começou a vender água de reuso para lavagem de ruas e para indústrias da região. “Tratar água potável para lavar calçada deixou de fazer sentido”, diz a engenheira Cecília Aragão, que coordena o plano.",
+ {q:"A estiagem não é um acidente que passa. É uma condição que a gente precisa projetar.",by:"Cecília Aragão, engenheira"},
+ "Moradores relatam adaptações curtas e caras. Famílias instalaram cisternas, comerciantes passaram a reaproveitar a água do ar-condicionado e escolas organizaram oficinas sobre consumo. O custo, porém, não se distribui por igual: nos bairros mais afastados a rede ainda falha, e quem não pode comprar reservatório depende de caminhões-pipa.",
+ "Especialistas ouvidos pela reportagem avaliam que os municípios que investirem agora em medição por bairro e em tarifas escalonadas terão mais fôlego nos próximos anos. A decisão, dizem, passa menos por obra grandiosa e mais por gestão contínua, com dados abertos para a população acompanhar."]},
+{id:"b2",sec:"brasil",ago:190,by:"Rafael Quintanilha",art:"notebook",
+ t:"Escolas de tempo integral ampliam vagas, mas faltam professores na zona rural",
+ d:"Redes estaduais abrem turmas no contraturno. O desafio agora é contratar e manter docentes longe das capitais.",
+ cap:"Caderno e lápis sobre a carteira de uma sala de aula.",
+ body:[
+ "O número de matrículas em escolas de tempo integral cresceu pelo quarto ano seguido, impulsionado por programas estaduais que financiam alimentação, transporte e salas adaptadas. Em muitos municípios, a jornada de nove horas já é a regra no ensino médio.",
+ "Nas áreas rurais, porém, as vagas abertas esbarram na falta de professores de matemática, física e química. Diretores contam que concursos ficam sem candidatos e que docentes recém-contratados pedem remoção em menos de dois anos. “A gente forma a turma e perde o professor no meio do semestre”, afirma o diretor Antônio Sales.",
+ "Para reverter o quadro, algumas redes testam bolsas de permanência, moradia subsidiada e aulas conjuntas por vídeo entre escolas vizinhas. Os resultados ainda são preliminares, mas pais e alunos relatam menos faltas e mais atividades de laboratório."]},
+{id:"b3",sec:"brasil",ago:260,by:"Marcela Teixeira",art:"books",
+ t:"Bibliotecas públicas ampliam o horário noturno e ganham um novo público",
+ d:"Estudantes, trabalhadores e autônomos procuram mesas silenciosas, internet estável e livros depois do expediente.",
+ cap:"Estantes de uma biblioteca municipal.",
+ body:[
+ "Em dez capitais, bibliotecas municipais passaram a funcionar até as 22 horas. A mudança, discutida por anos, saiu do papel com custo modesto: horas extras de poucos funcionários e uma revisão da iluminação dos salões.",
+ "O público que chegou à noite é diferente do que frequentava as manhãs. Há quem estude para concursos, quem trabalhe de forma remota e quem prefira o silêncio ao barulho de casa. “Eu venho depois do trabalho para ter duas horas só minhas”, diz a analista Priscila Dantas.",
+ "Bibliotecários notam que a procura por livros também aumentou, em especial de literatura brasileira e de material técnico. O próximo passo, dizem, é oferecer cursos curtos e clubes de leitura no mesmo horário."]},
+{id:"m1",sec:"mundo",ago:95,by:"Otávio Brandão",art:"sea",
+ t:"Cúpula reúne países para discutir regras comuns de segurança em rotas marítimas",
+ d:"Delegações tentam acordo sobre troca de informações e proteção de cabos submarinos, mas divergem sobre quem fiscaliza.",
+ cap:"Navio de carga no horizonte, ao entardecer.",
+ body:[
+ "Representantes de mais de trinta países iniciaram nesta semana uma rodada de negociações sobre segurança em rotas marítimas e na infraestrutura submarina que conecta continentes. Boa parte do tráfego de dados e de mercadorias do planeta depende desses corredores.",
+ "O principal ponto de atrito é institucional. Países com grandes frotas defendem um mecanismo de fiscalização conjunta; outros temem perder soberania sobre águas próximas. Diplomatas ouvidos em caráter reservado falam em um texto de compromisso, sem sanções automáticas.",
+ "Um documento preliminar prevê a criação de um canal permanente para alertas de incidentes e a padronização de relatórios de reparo. Se aprovado, entraria em vigor depois de ratificações nacionais, o que costuma levar anos."]},
+{id:"m2",sec:"mundo",ago:330,by:"Luísa Camargo",art:"city",
+ t:"Envelhecimento da população europeia redesenha o mercado de trabalho e as cidades",
+ d:"Menos jovens, mais aposentados e uma demanda crescente por cuidadores mudam o que as cidades oferecem e quem as constrói.",
+ cap:"Silhueta de uma cidade europeia ao fim do dia.",
+ body:[
+ "Em boa parte da Europa, a faixa etária que mais cresce é a dos maiores de 75 anos. Demógrafos apontam que, em algumas regiões, haverá mais pessoas saindo do mercado de trabalho do que entrando nos próximos quinze anos, o que pressiona salários, previdência e serviços locais.",
+ "As cidades já reagem. Prefeituras reformam calçadas, ampliam o transporte de porta a porta e criam centros de convivência em antigas escolas. Empresas de saúde domiciliar procuram profissionais que quase não existem no mercado, e alguns países facilitam a entrada de cuidadores estrangeiros.",
+ "Economistas lembram que o envelhecimento também abre oportunidades, de serviços financeiros a tecnologia assistiva. Mas alertam que o ajuste exige decisões difíceis sobre idade de aposentadoria e financiamento da saúde, temas que raramente rendem votos."]},
+{id:"e1",sec:"economia",ago:130,by:"Davi Nogueira",art:"chart",
+ t:"Pequenas empresas relatam crédito mais caro e prazos mais curtos",
+ d:"Levantamento com comerciantes e prestadores de serviço indica cautela para investir e adiamento de contratações.",
+ cap:"Gráfico ilustrativo de custo do crédito ao longo do ano.",
+ body:[
+ "Donos de pequenos negócios ouvidos em uma pesquisa com mais de mil empresas dizem que o crédito ficou mais caro e que os bancos pedem mais garantias. Boa parte afirma ter adiado a compra de equipamentos por causa dos juros.",
+ "O efeito aparece no dia a dia. A dona de uma padaria no interior contou que passou a negociar prazos menores com fornecedores para não depender de empréstimo de curto prazo. “Antes eu comprava para dois meses. Hoje compro para duas semanas”, disse a comerciante Neusa Ferraz.",
+ "Consultores recomendam separar o caixa pessoal do caixa da empresa, renegociar dívidas antes do vencimento e comparar linhas de crédito de cooperativas e bancos públicos. Para o próximo ano, os empresários dizem esperar alguma folga, mas sem data definida."]},
+{id:"e2",sec:"economia",ago:400,by:"Sofia Mendonça",art:"cup",
+ t:"Café mais caro: como a cadeia repassa o custo da safra ao consumidor",
+ d:"Do produtor ao balcão da padaria, cada etapa ajusta preços em ritmos diferentes, e o consumidor sente o resultado depois.",
+ cap:"Xícara de café sobre o balcão.",
+ body:[
+ "O preço do pacote de café costuma reagir à safra com algum atraso. Quando a colheita é menor, produtores e cooperativas reajustam o grão em poucas semanas, mas as torrefadoras demoram mais, porque trabalham com estoques e contratos fechados.",
+ "No varejo, a diferença aparece em escala. Supermercados negociam promoções com marcas líderes, enquanto cafeterias de bairro, que compram em volumes menores, repassam o aumento mais rápido ao cafezinho do balcão.",
+ "Economistas sugerem que o consumidor compare preço por quilo, e não por embalagem, e experimente marcas regionais. Também lembram que o clima é só uma parte da conta: frete, energia e câmbio entram no preço final."]},
+{id:"e3",sec:"economia",ago:480,by:"Henrique Altamirano",art:"rail",
+ t:"Ferrovias de carga voltam ao debate com a alta do custo do frete",
+ d:"Transportadores e produtores discutem trechos que poderiam sair do papel, e o prazo das obras segue sendo o maior obstáculo.",
+ cap:"Trilhos em perspectiva, rumo ao horizonte.",
+ body:[
+ "Com o custo do diesel e do pedágio pesando na conta, empresas do agronegócio e da indústria voltam a defender a ampliação da malha ferroviária. O trem, dizem, é mais barato por tonelada em longas distâncias e emite menos carbono.",
+ "O problema é o tempo. Uma ferrovia leva anos entre licenciamento, desapropriações e obras, e exige terminais bem conectados a portos e rodovias. Especialistas em logística afirmam que trechos curtos, ligando polos produtores a portos, entregam resultado mais rápido.",
+ "Enquanto as obras não saem, algumas empresas testam modelos mistos, em que o caminhão leva a carga até um terminal e o trem faz a parte longa da viagem. A diferença de preço, segundo os transportadores, aparece nas rotas mais longas."]},
+{id:"t1",sec:"tecnologia",ago:150,by:"Letícia Arantes",art:"circuit",
+ t:"Hospitais testam assistentes de IA para resumir prontuários; médicos pedem cautela",
+ d:"A promessa é reduzir o tempo de burocracia. O risco é um resumo que omita um detalhe importante.",
+ cap:"Ilustração de circuito eletrônico.",
+ body:[
+ "Alguns hospitais começaram a testar ferramentas que leem anotações e exames de um paciente e produzem um resumo em segundos. A expectativa é devolver tempo ao médico, que hoje gasta parte do plantão preenchendo e relendo registros.",
+ "Os profissionais ouvidos pela reportagem, porém, pedem cautela. Um resumo pode soar convincente e ainda assim deixar de fora uma alergia ou uma interação entre remédios. “O texto precisa ser sempre conferido por quem assina o prontuário”, afirma a médica Luciana Barros.",
+ "Os projetos-piloto mantêm o resumo como rascunho, sem substituir o registro oficial, e medem quantas correções os médicos precisam fazer. Pacientes também devem ser informados sobre o uso da ferramenta e sobre como seus dados são protegidos."]},
+{id:"t2",sec:"tecnologia",ago:600,by:"Bruno Figueiredo",art:"circuit",
+ t:"Pagar com o celular ficou comum. Os golpes também",
+ d:"Aproximação, QR code e links enviados por mensagem: onde estão os pontos fracos e como reduzir o risco.",
+ cap:"Placa de circuito, em ilustração.",
+ body:[
+ "Pagar com o celular virou hábito em feiras, bares e aplicativos de transporte. A conveniência trouxe junto uma onda de tentativas de fraude, que exploram pressa, distração e a confiança em mensagens que parecem vir do banco.",
+ "Os golpes mais comuns usam links falsos, QR codes trocados em cobranças presenciais e ligações de supostos atendentes pedindo códigos. Especialistas em segurança recomendam nunca compartilhar códigos recebidos por SMS e conferir o nome do recebedor antes de confirmar.",
+ "Outras medidas simples ajudam: ativar o bloqueio de tela, definir limite para transações noturnas e manter o aplicativo do banco atualizado. Em caso de golpe, avisar o banco rapidamente aumenta a chance de bloquear a transferência."]},
+{id:"c1",sec:"ciencia",ago:720,by:"Paula Siqueira",art:"sprout",
+ t:"Pesquisadores mapeiam bactérias do solo que ajudam lavouras a resistir ao calor",
+ d:"Estudo em campo compara áreas com e sem esses microrganismos e abre caminho para insumos biológicos.",
+ cap:"Brotos em solo seco, em ilustração.",
+ body:[
+ "Uma equipe de pesquisadores de universidades públicas coletou amostras de solo em diferentes regiões e identificou grupos de bactérias associados a plantas mais resistentes a períodos de calor intenso. O trabalho combinou análise genética e testes em estufa.",
+ "Segundo a bióloga Renata Moura, que coordenou a pesquisa, os microrganismos ajudam as raízes a absorver água e nutrientes quando o solo está seco. “Não é uma solução mágica, mas pode reduzir perdas em safras que dependem de chuva”, disse.",
+ "O próximo passo é testar a aplicação em lavouras comerciais e verificar o efeito ao longo de várias safras. Os autores também querem entender se o benefício se mantém quando o solo recebe fertilizantes químicos."]},
+{id:"c2",sec:"ciencia",ago:840,by:"Gabriel Nascimento",art:"orbit",
+ t:"Nova imagem de telescópio mostra galáxia em formação a bilhões de anos-luz",
+ d:"A luz registrada saiu de lá quando o universo era bem mais jovem e ajuda a testar modelos sobre como as galáxias crescem.",
+ cap:"Representação artística de um sistema em órbita.",
+ body:[
+ "Astrônomos divulgaram uma imagem de longa exposição que mostra uma galáxia ainda em formação. A luz que chegou ao telescópio partiu de lá bilhões de anos atrás, o que permite observar um estágio inicial que não se vê em galáxias próximas.",
+ "A imagem exibe regiões de intensa formação de estrelas e filamentos de gás que alimentam o conjunto. Para os pesquisadores, esses detalhes ajudam a avaliar se os modelos atuais explicam bem a velocidade com que a matéria se reuniu.",
+ "Novas observações, com outros instrumentos, devem separar melhor as cores e medir a composição química do gás. Os dados serão publicados para que equipes de outros países possam reanalisá-los."]},
+{id:"s1",sec:"saude",ago:900,by:"Camila Rezende",art:"sun",
+ t:"Sono irregular na adolescência: o que a pesquisa sugere para as famílias",
+ d:"Horários que mudam todo dia e telas na cama aparecem entre os fatores mais associados a cansaço e queda de atenção.",
+ cap:"Sol baixo no fim da tarde.",
+ body:[
+ "Durante a adolescência, o relógio biológico tende a atrasar, e os jovens passam a dormir e acordar mais tarde. Quando as aulas começam cedo, o resultado costuma ser um déficit de sono que se acumula ao longo da semana.",
+ "Pesquisas indicam que manter horários parecidos nos fins de semana, reduzir o uso de telas na hora de deitar e evitar cafeína à tarde ajuda a melhorar o descanso. “Pequenas rotinas constantes valem mais que grandes esforços ocasionais”, diz a pediatra Helga Moreira.",
+ "Escolas em diferentes países testam horários de entrada mais tarde, com relatos de menos atrasos e melhor humor em sala. Famílias que notam sonolência intensa ou roncos fortes devem procurar um profissional de saúde."]},
+{id:"s2",sec:"saude",ago:1100,by:"Tiago Valadares",art:"pulse",
+ t:"Vacinação de rotina em queda: como bairros tentam recuperar a cobertura",
+ d:"Postos abertos à noite, busca ativa e conversas com as famílias aparecem entre as medidas que mostram resultado.",
+ cap:"Traçado de monitoramento de saúde, em ilustração.",
+ body:[
+ "A cobertura de algumas vacinas de rotina caiu nos últimos anos em várias cidades, o que preocupa profissionais de saúde. Doenças que estavam controladas podem voltar quando uma parcela maior das crianças deixa de receber as doses.",
+ "Equipes de bairro apostam em estratégias simples: ampliar horários de atendimento, visitar casas de crianças com a caderneta atrasada e usar mensagens de lembrete. Agentes de saúde dizem que muitas famílias não se opõem à vacina, só têm dificuldade de ir ao posto em horário comercial.",
+ "Especialistas lembram que a caderneta de vacinação deve ser conferida a cada consulta e que as unidades básicas orientam sobre doses atrasadas. Em caso de dúvida sobre o calendário, procurar o posto de saúde mais próximo é o caminho mais seguro."]},
+{id:"k1",sec:"cultura",ago:360,by:"Renata Cordeiro",art:"film",
+ t:"Festival de cinema abre com filmes feitos longe dos grandes centros",
+ d:"A programação reúne documentários, ficções e curtas de produtoras regionais, com sessões gratuitas e debates.",
+ cap:"Fotogramas de uma tira de filme, em ilustração.",
+ body:[
+ "A abertura do festival deste ano coloca no centro filmes produzidos fora dos eixos tradicionais. Entre os selecionados há documentários sobre comunidades ribeirinhas, ficções rodadas em cidades pequenas e curtas de estudantes de audiovisual.",
+ "Os organizadores dizem que a curadoria tentou equilibrar nomes conhecidos e estreantes. “Queremos que o público descubra histórias que dificilmente chegariam a uma sala comercial”, afirma a programadora Isadora Bastos.",
+ "As sessões são acompanhadas de conversas com diretores e equipes, e parte da programação ocupa praças e escolas. O festival também mantém uma mostra infantil, com legendas e recursos de acessibilidade."]},
+{id:"k2",sec:"cultura",ago:1300,by:"Felipe Andrade",art:"books",
+ t:"Livrarias de bairro reinventam o balcão com clubes de leitura e encomendas",
+ d:"Sem competir em preço, pequenos comércios apostam em indicação personalizada e eventos para manter a clientela.",
+ cap:"Prateleiras de uma livraria de bairro.",
+ body:[
+ "Diante das grandes redes e das vendas pela internet, livrarias de bairro buscam outra forma de atrair leitores. Muitas passaram a organizar clubes de leitura, noites de autógrafos e encontros com ilustradores, o que transforma a loja em ponto de convivência.",
+ "O livreiro Eduardo Lima, que mantém uma loja há quase vinte anos, diz que o diferencial é a conversa. “Quem entra aqui sai com uma sugestão que não encontraria sozinho”, afirma. Serviço de encomenda e entrega por bicicleta completam a oferta.",
+ "O setor ainda enfrenta aluguéis altos e margens apertadas. Associações de livreiros pedem apoio de prefeituras e programas de compra para bibliotecas escolares, o que ajudaria a manter pequenos pontos de venda abertos."]},
+{id:"p1",sec:"esportes",ago:220,by:"Murilo Sampaio",art:"stadium",
+ t:"Time de base lidera o campeonato com o elenco mais jovem do torneio",
+ d:"O técnico aposta em jogadores formados no clube e em um jogo de pressão alta, que rende pontos e elogios.",
+ cap:"Estádio iluminado antes da partida.",
+ body:[
+ "Com um elenco formado em sua maioria por jogadores jovens, o time lidera o campeonato e surpreende rivais com folhas de pagamento muito maiores. Vários titulares foram revelados nas categorias de base do próprio clube.",
+ "O técnico Marcos Vilela diz que o trabalho começou anos atrás, com a aproximação entre a base e o time principal. “O garoto chega sabendo como o clube joga”, afirma. A estratégia reduz custos e cria identidade.",
+ "Ainda há dúvidas sobre a resistência da equipe no fim do campeonato, quando o calendário aperta e a experiência pesa. A diretoria, por ora, trabalha para renovar contratos dos jovens antes que clubes maiores façam propostas."]},
+{id:"p2",sec:"esportes",ago:1500,by:"Aline Duarte",art:"track",
+ t:"Corridas de rua crescem e mudam o calendário e o trânsito das cidades",
+ d:"Provas de 5 e 10 quilômetros ocupam avenidas aos domingos e levam prefeituras a discutir segurança e organização.",
+ cap:"Raias de uma pista de corrida, vistas de cima.",
+ body:[
+ "As corridas de rua se multiplicaram, e o calendário de muitas cidades tem prova quase todo fim de semana. Os percursos ocupam avenidas, o que exige interdições, equipes de saúde e um plano de comunicação para moradores e comerciantes.",
+ "Organizadores dizem que o público é variado: de quem corre pela primeira vez a atletas experientes. Treinadores recomendam aumentar a distância aos poucos, usar tênis adequados e procurar avaliação médica antes de iniciar um plano de treinos.",
+ "Para o comércio local, as provas movimentam hotéis e restaurantes, mas também geram queixas sobre barulho e trânsito. Prefeituras tentam concentrar as corridas em dias e trechos que causem menos transtorno."]},
+{id:"o1",sec:"opiniao",ago:300,by:"Rui Cavalcanti",art:"notebook",
+ t:"A pressa que nos faz ler pouco",
+ d:"Ler devagar virou luxo. Talvez devesse ser hábito.",cap:"",
+ body:[
+ "Passamos o dia rolando textos que mal terminamos. Abrimos uma matéria, lemos o título, o primeiro parágrafo e partimos para outra, com a sensação de que estar informado é acumular fragmentos.",
+ "Ler com atenção exige tempo, e tempo é justamente o que dizemos não ter. No entanto, quem tenta reservar vinte minutos por dia para um texto longo costuma notar que lembra mais e se irrita menos.",
+ "Não se trata de rejeitar a velocidade, mas de escolher quando ela serve. Um bom jornal pode ajudar, selecionando o que merece atenção. O resto é decisão nossa: silenciar a notificação e terminar o parágrafo."]},
+{id:"o2",sec:"opiniao",ago:700,by:"Beatriz Lemos",art:"city",
+ t:"Cidade boa é cidade que se anda",
+ d:"Calçadas largas e travessias seguras dizem mais sobre uma gestão do que grandes obras.",cap:"",
+ body:[
+ "Costumo avaliar uma cidade pelo caminho entre o ponto de ônibus e a porta de casa. Se ele tem sombra, piso inteiro e uma travessia que não exige coragem, boa parte do resto tende a funcionar.",
+ "Calçada não rende inauguração, e talvez por isso seja tão negligenciada. Mas é ela que garante que uma criança vá à escola sozinha, que uma pessoa idosa vá à padaria e que um cadeirante chegue ao trabalho.",
+ "Prefeituras que tratam o pedestre como prioridade costumam colher efeitos silenciosos: comércio local mais vivo, menos acidentes e ruas onde as pessoas se encontram. Nenhuma dessas conquistas depende de um grande projeto, apenas de constância."]},
+{id:"o3",sec:"opiniao",ago:1000,by:"Caio Marques",art:"chart",
+ t:"O custo invisível da reunião",
+ d:"Uma hora com dez pessoas custa dez horas. Poucas empresas fazem essa conta antes de convocar.",cap:"",
+ body:[
+ "Toda reunião tem um preço que não aparece em nenhuma planilha: o tempo das pessoas multiplicado por quem entra na sala. Uma conversa de uma hora com dez participantes consome dez horas de trabalho.",
+ "Isso não significa que reuniões sejam inúteis. Algumas decidem em minutos o que levaria semanas por mensagem. O problema são as que existem por hábito, sem pauta, sem decisão e sem fim.",
+ "Uma regra simples ajuda: quem convoca explica o que precisa sair dali. Se a resposta cabe em um e-mail, o e-mail basta. Se não cabe, a reunião ganha sentido e todos chegam sabendo por que estão lá."]}
+];
+
+var MOST=["b1","e2","t2","s1","p1"];
+
+/* ---------- utilidades ---------- */
+var NOW=new Date();
+var $=function(s,r){return (r||document).querySelector(s)};
+var esc=function(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
+var norm=function(s){return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")};
+var secOf=function(id){return SECS.filter(function(s){return s.id===id})[0]};
+var get=function(id){return A.filter(function(a){return a.id===id})[0]};
+var byAgo=function(a,b){return a.ago-b.ago};
+var store={
+  get:function(k,d){try{var v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},
+  set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+function ago(m){return m<60?"há "+m+" min":m<1440?"há "+Math.round(m/60)+" h":m<2880?"ontem":"há "+Math.floor(m/1440)+" dias"}
+function hhmm(m){return new Date(NOW.getTime()-m*60000).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}).replace(":","h")}
+function when(a){var d=new Date(NOW.getTime()-a.ago*60000);return d.toLocaleDateString("pt-BR",{day:"numeric",month:"long",year:"numeric"})+" às "+hhmm(a.ago)}
+function words(a){return a.body.reduce(function(n,p){return n+(typeof p==="string"?p:p.q).split(/\s+/).length},0)}
+function mins(a){return Math.max(1,Math.round(words(a)/200))}
+A.forEach(function(a){
+  a._idx=norm([a.t,a.d,a.by,secOf(a.sec).name].concat(a.body.map(function(p){return typeof p==="string"?p:p.q})).join(" "));
+});
+
+/* ---------- ilustrações geradas ---------- */
+var W=800,H=500;
+function R(seed){var s=seed%2147483647;if(s<=0)s+=2147483646;return function(){s=s*16807%2147483647;return s/2147483647}}
+function hash(str){var h=7;for(var i=0;i<str.length;i++)h=(h*31+str.charCodeAt(i))>>>0;return h}
+var ART={
+field:function(r){var o='<circle cx="'+(430+r()*240|0)+'" cy="'+(100+r()*50|0)+'" r="'+(46+r()*22|0)+'" fill="var(--a2)" opacity=".55"/>';
+  for(var i=0;i<7;i++){var y=220+i*40,a=14+r()*20,p=r()*6,d="M0 "+H+"L0 "+y;for(var x=0;x<=W;x+=16)d+="L"+x+" "+(y+Math.sin(x/110+p)*a).toFixed(1);d+="L"+W+" "+H+"Z";o+='<path d="'+d+'" fill="'+(i%2?"var(--a1)":"var(--a2)")+'" opacity="'+(.55+i*.07).toFixed(2)+'"/>'}
+  return o},
+sea:function(r){var o='<circle cx="'+(300+r()*200|0)+'" cy="190" r="70" fill="var(--a2)" opacity=".6"/><rect y="250" width="'+W+'" height="250" fill="var(--a2)"/>';
+  var sx=140+r()*400|0;o+='<path d="M'+sx+' 250h110l-14-26h-70z" fill="var(--a1)"/><rect x="'+(sx+40)+'" y="196" width="22" height="30" fill="var(--a1)"/>';
+  for(var i=0;i<9;i++){var y=270+i*26,p=r()*6,d="M0 "+y;for(var x=0;x<=W;x+=20)d+="L"+x+" "+(y+Math.sin(x/40+p)*6).toFixed(1);o+='<path d="'+d+'" fill="none" stroke="'+(i%2?"var(--a1)":"var(--a3)")+'" stroke-width="3" opacity=".7"/>'}
+  return o},
+city:function(r){var o='<circle cx="'+(560+r()*160|0)+'" cy="110" r="40" fill="var(--a2)" opacity=".5"/>';
+  for(var x=-10,i=0;x<W;i++){var w=44+r()*56|0,h=110+r()*220|0;o+='<rect x="'+x+'" y="'+(H-h)+'" width="'+w+'" height="'+h+'" fill="'+(i%2?"var(--a1)":"var(--a2)")+'"/>';
+    for(var wy=H-h+14;wy<H-10;wy+=22)for(var wx=x+8;wx<x+w-10;wx+=16)if(r()>.55)o+='<rect x="'+wx+'" y="'+wy+'" width="7" height="10" fill="var(--a3)" opacity=".7"/>';x+=w+4}
+  return o},
+chart:function(r){var o="",i;for(i=1;i<6;i++)o+='<path d="M40 '+i*75+'H760" stroke="var(--a2)" stroke-width="1.5" opacity=".5"/>';
+  var pts=[];for(i=0;i<10;i++){var h=60+i*18+r()*80|0;o+='<rect x="'+(60+i*70)+'" y="'+(H-40-h)+'" width="44" height="'+h+'" fill="var(--a2)"/>';pts.push([82+i*70,(H-40-h-30-r()*30)|0])}
+  o+='<path d="M40 460H760" stroke="var(--a1)" stroke-width="4"/><polyline points="'+pts.map(function(p){return p.join(",")}).join(" ")+'" fill="none" stroke="var(--a1)" stroke-width="6" stroke-linejoin="round"/>';
+  pts.forEach(function(p){o+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="8" fill="var(--a1)"/>'});return o},
+circuit:function(r){var o='<rect width="'+W+'" height="'+H+'" fill="var(--a1)"/>';
+  for(var i=0;i<16;i++){var x=(r()*20|0)*40,y=(r()*12|0)*40+20,d="M"+x+" "+y;for(var k=0;k<4;k++){if(k%2)y+=((r()*4|0)-2)*40;else x+=((r()*4|0)+1)*40;d+="L"+x+" "+y}
+    o+='<path d="'+d+'" fill="none" stroke="var(--a2)" stroke-width="3"/><circle cx="'+x+'" cy="'+y+'" r="7" fill="var(--a3)"/>'}
+  return o+'<rect x="320" y="190" width="160" height="120" rx="6" fill="var(--a2)"/><rect x="350" y="220" width="100" height="60" fill="var(--a1)"/>'},
+orbit:function(r){var o='<rect width="'+W+'" height="'+H+'" fill="var(--a1)"/>',i;
+  for(i=0;i<70;i++)o+='<circle cx="'+(r()*W|0)+'" cy="'+(r()*H|0)+'" r="'+(.8+r()*1.8).toFixed(1)+'" fill="var(--a3)" opacity=".6"/>';
+  for(i=0;i<4;i++)o+='<ellipse cx="400" cy="250" rx="'+(120+i*60)+'" ry="'+(40+i*26)+'" transform="rotate('+(-18+i*6)+' 400 250)" fill="none" stroke="var(--a2)" stroke-width="2.5"/>';
+  return o+'<circle cx="400" cy="250" r="46" fill="var(--a3)"/><circle cx="'+(300+r()*200|0)+'" cy="'+(120+r()*40|0)+'" r="10" fill="var(--a3)"/>'},
+sun:function(){var o='<circle cx="400" cy="270" r="170" fill="var(--a2)"/>';
+  for(var i=0;i<9;i++)o+='<rect y="'+(290+i*24)+'" width="'+W+'" height="'+(6+i*2)+'" fill="var(--a3)"/>';
+  return o+'<rect y="440" width="'+W+'" height="60" fill="var(--a1)"/>'},
+stadium:function(r){var o='<rect width="'+W+'" height="'+H+'" fill="var(--a1)"/>',i;
+  [90,710].forEach(function(x){var t=x<400?x+260:x-260,u=x<400?x+40:x-40;o+='<polygon points="'+x+',60 '+t+',400 '+u+',400" fill="var(--a3)" opacity=".18"/><circle cx="'+x+'" cy="60" r="16" fill="var(--a3)"/>'});
+  o+='<rect y="330" width="'+W+'" height="170" fill="var(--a2)"/><g stroke="var(--a3)" stroke-width="3" fill="none"><rect x="80" y="360" width="640" height="110"/><path d="M400 360V470"/><ellipse cx="400" cy="415" rx="40" ry="26"/></g>';
+  for(i=0;i<60;i++)o+='<circle cx="'+(r()*W|0)+'" cy="'+(250+r()*70|0)+'" r="4" fill="var(--a3)" opacity=".5"/>';return o},
+books:function(r){var o="";for(var s=0;s<3;s++){var x=30,y=150+s*120;while(x<W-60){var w=22+r()*30|0,h=70+r()*40|0;o+='<rect x="'+x+'" y="'+(y-h+80)+'" width="'+w+'" height="'+h+'" fill="'+(r()>.5?"var(--a1)":"var(--a2)")+'"/>';x+=w+3}
+  o+='<rect x="10" y="'+(y+80)+'" width="780" height="10" fill="var(--a1)"/>'}return o},
+film:function(r){var o='<rect width="'+W+'" height="'+H+'" fill="var(--a1)"/><rect y="120" width="'+W+'" height="260" fill="var(--a2)"/>',i;
+  for(i=0;i<5;i++)o+='<rect x="'+(20+i*155)+'" y="170" width="135" height="160" fill="'+(i%2?"var(--a3)":"var(--a1)")+'"/>';
+  for(var x=10;x<W;x+=30)o+='<rect x="'+x+'" y="135" width="14" height="18" fill="var(--a1)"/><rect x="'+x+'" y="347" width="14" height="18" fill="var(--a1)"/>';
+  return o+'<circle cx="'+(100+r()*600|0)+'" cy="250" r="30" fill="var(--a2)" opacity=".7"/>'},
+pulse:function(){var o="",x,y;for(x=0;x<=W;x+=40)o+='<path d="M'+x+' 0V'+H+'" stroke="var(--a2)" opacity=".3"/>';for(y=0;y<=H;y+=40)o+='<path d="M0 '+y+'H'+W+'" stroke="var(--a2)" opacity=".3"/>';
+  var d="M0 260";x=0;while(x<W){d+="H"+(x+60)+"l12-20 14 20 10 0 10 90 14-190 16 130 10-30H"+(x+200);x+=220}
+  return o+'<path d="'+d+'" fill="none" stroke="var(--a1)" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>'},
+rail:function(){var o='<circle cx="560" cy="90" r="46" fill="var(--a2)" opacity=".5"/><rect y="190" width="'+W+'" height="310" fill="var(--a2)"/>';
+  for(var i=0;i<9;i++){var y=210+i*i*4.2+i*14,w=60+i*58;o+='<rect x="'+(400-w/2)+'" y="'+y+'" width="'+w+'" height="'+(6+i*2)+'" fill="var(--a1)"/>'}
+  return o+'<path d="M392 190L110 '+H+'M408 190L690 '+H+'" stroke="var(--a3)" stroke-width="8"/>'},
+notebook:function(){var o="";for(var y=70;y<H;y+=40)o+='<path d="M0 '+y+'H'+W+'" stroke="var(--a2)" stroke-width="2" opacity=".6"/>';
+  return o+'<path d="M110 0V'+H+'" stroke="var(--a1)" stroke-width="3" opacity=".7"/><g transform="rotate(-24 400 260)"><rect x="170" y="235" width="420" height="34" fill="var(--a1)"/><polygon points="590,235 650,252 590,269" fill="var(--a2)"/><rect x="150" y="235" width="30" height="34" fill="var(--a2)"/></g>'},
+cup:function(){var o='<ellipse cx="400" cy="400" rx="230" ry="36" fill="var(--a2)"/><path d="M270 250h260l-26 140q-6 22-30 22H326q-24 0-30-22z" fill="var(--a1)"/><path d="M530 280q70 0 70 50t-80 50" fill="none" stroke="var(--a1)" stroke-width="22"/>';
+  for(var i=0;i<3;i++)o+='<path d="M'+(340+i*60)+' 220q-30-40 0-80t0-70" fill="none" stroke="var(--a2)" stroke-width="10" stroke-linecap="round" opacity=".7"/>';return o},
+sprout:function(r){var o='<rect width="'+W+'" height="'+H+'" fill="var(--a1)"/><rect y="380" width="'+W+'" height="120" fill="var(--a2)"/>',i;
+  for(var k=0;k<3;k++){var x=200+k*200,h=140+r()*120|0;o+='<path d="M'+x+' 400V'+(400-h)+'" stroke="var(--a3)" stroke-width="8"/>';
+    for(i=0;i<4;i++){var y=400-h+i*h/4.5,s=i%2?1:-1;o+='<ellipse cx="'+(x+s*34)+'" cy="'+y+'" rx="36" ry="14" transform="rotate('+(s*-28)+' '+(x+s*34)+' '+y+')" fill="var(--a3)"/>'}}
+  for(i=0;i<40;i++)o+='<circle cx="'+(r()*W|0)+'" cy="'+(400+r()*90|0)+'" r="'+(2+r()*4|0)+'" fill="var(--a1)" opacity=".5"/>';return o},
+track:function(){var o="";for(var i=0;i<6;i++)o+='<rect x="'+(-60+i*30)+'" y="'+(40+i*30)+'" width="'+(W+120-i*60)+'" height="'+(H-80-i*60)+'" rx="'+(150-i*18)+'" fill="none" stroke="'+(i%2?"var(--a2)":"var(--a1)")+'" stroke-width="26"/>';return o}
+};
+function pic(a){
+  var f=ART[a.art]||ART.sun;
+  return '<svg class="art" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid slice" role="img" aria-label="'+esc(a.cap||a.t)+'"><rect width="'+W+'" height="'+H+'" fill="var(--a3)"/>'+f(R(hash(a.id)))+'<rect width="'+W+'" height="'+H+'" fill="url(#ht)"/></svg>';
+}
+
+/* ---------- blocos de HTML ---------- */
+var L=function(r,inner,cls){return '<a href="#'+r+'" data-r="'+r+'"'+(cls?' class="'+cls+'"':"")+'>'+inner+'</a>'};
+var mat=function(a){return "materia-"+a.id};
+var kick=function(a){return '<p class="kicker">'+esc(secOf(a.sec).name)+'</p>'};
+var meta=function(a){return '<span class="meta">Por '+esc(a.by)+' · '+ago(a.ago)+'</span>'};
+var h3=function(a){return '<h3>'+L(mat(a),esc(a.t),"hl")+'</h3>'};
+var sText=function(a){return '<article class="story">'+kick(a)+h3(a)+'<p>'+esc(a.d)+'</p>'+meta(a)+'</article>'};
+var sMedia=function(a){return '<article class="story">'+L(mat(a),pic(a),"figlink")+kick(a)+h3(a)+'<p>'+esc(a.d)+'</p>'+meta(a)+'</article>'};
+var sRow=function(a){return '<article class="row">'+L(mat(a),pic(a),"figlink")+'<div>'+kick(a)+h3(a)+'<p>'+esc(a.d)+'</p>'+meta(a)+'</div></article>'};
+var mostRead=function(){return '<ol class="ml">'+MOST.map(function(id){var a=get(id);return '<li>'+L(mat(a),esc(a.t),"hl")+'</li>'}).join("")+'</ol>'};
+var opCard=function(a){return '<article class="opc"><p class="by">'+esc(a.by)+'</p><h2>'+L(mat(a),esc(a.t),"hl")+'</h2><p>'+esc(a.d)+'</p><span class="meta">'+ago(a.ago)+' · '+mins(a)+' min de leitura</span></article>'};
+
+/* ---------- páginas ---------- */
+function home(){
+  var lead=get("b1");
+  var front=["b1","b2","b3","m1","m2","e1","p1","k1","o1","o2","o3"];
+  var left=["b2","b3","m2","p1","k1"].map(function(i){return sText(get(i))}).join("");
+  var ops=["o1","o2","o3"].map(function(i){var a=get(i);return '<article class="op"><p class="by">'+esc(a.by)+'</p><h3>'+L(mat(a),esc(a.t),"hl")+'</h3></article>'}).join("");
+  var tick=A.filter(function(a){return a.sec!=="opiniao"}).sort(byAgo).slice(0,4).map(function(a){return '<span><time>'+hhmm(a.ago)+'</time>'+L(mat(a),esc(a.t),"hl")+'</span>'}).join("");
+  var block=function(id){
+    var s=secOf(id),items=A.filter(function(a){return a.sec===id&&front.indexOf(a.id)<0}).sort(byAgo);
+    return '<section><h2 class="hd"><span>'+s.name+'</span>'+L(id,"Ver tudo →","more")+'</h2>'+items.map(sRow).join("")+'</section>';
+  };
+  var pairs=[["economia","tecnologia"],["ciencia","saude"],["cultura","esportes"]].map(function(p){return '<div class="pair">'+block(p[0])+block(p[1])+'</div>'});
+  var newsBand='<section class="news"><h2>Receba a edição da manhã</h2><p>Um resumo do que importa, com três leituras para o café. Escolha as edições que quer receber.</p><button class="btn btn--solid" type="button" data-act="sub">Escolher newsletters</button></section>';
+  return '<div class="ticker"><b>Últimas</b>'+tick+'</div>'+
+  '<div class="front">'+
+    '<div class="col-l">'+left+'</div>'+
+    '<div class="col-c"><article class="lead">'+kick(lead)+'<h1>'+L(mat(lead),esc(lead.t),"hl")+'</h1><p class="leaddeck">'+esc(lead.d)+'</p><span class="meta">Por '+esc(lead.by)+' · '+ago(lead.ago)+' · '+mins(lead)+' min de leitura</span>'+
+      '<figure class="fig">'+L(mat(lead),pic(lead),"figlink")+'<figcaption>'+esc(lead.cap)+'<span>Ilustração</span></figcaption></figure></article>'+
+      '<div class="duo">'+sMedia(get("m1"))+sMedia(get("e1"))+'</div></div>'+
+    '<div class="col-r"><h2 class="hd"><span>Opinião</span>'+L("opiniao","Ver tudo →","more")+'</h2>'+ops+'<h2 class="hd mt"><span>Mais lidas</span></h2>'+mostRead()+'</div>'+
+  '</div>'+pairs[0]+pairs[1]+newsBand+pairs[2];
+}
+
+function secPage(id){
+  var s=secOf(id),items=A.filter(function(a){return a.sec===id}).sort(byAgo);
+  var head='<header class="sh"><h1>'+s.name+'</h1><p>'+esc(s.desc)+'</p></header>';
+  if(id==="opiniao")return head+'<div class="oplist">'+items.map(opCard).join("")+'</div>';
+  var first=items[0],rest=items.slice(1);
+  var lead=first?'<article class="slead">'+L(mat(first),pic(first),"figlink")+kick(first)+'<h2>'+L(mat(first),esc(first.t),"hl")+'</h2><p>'+esc(first.d)+'</p>'+meta(first)+'</article>':"";
+  return head+'<div class="secgrid"><div>'+lead+rest.map(sRow).join("")+'</div><aside><h2 class="hd"><span>Mais lidas</span></h2>'+mostRead()+'</aside></div>';
+}
+
+function savedPage(){
+  var items=A.filter(function(a){return saved.has(a.id)}).sort(byAgo);
+  var head='<header class="sh"><h1>Salvos</h1><p>As matérias que você guardou para ler depois. Elas ficam neste navegador.</p></header>';
+  if(!items.length)return head+'<p class="empty">Nenhuma matéria salva ainda. Use o botão Salvar no alto de cada matéria.</p>';
+  return head+'<div style="max-width:820px">'+items.map(sRow).join("")+'</div>';
+}
+
+function articlePage(a){
+  var s=secOf(a.sec),op=a.sec==="opiniao";
+  var body=a.body.map(function(p){return typeof p==="string"?'<p>'+esc(p)+'</p>':'<blockquote class="pq"><p>“'+esc(p.q)+'”</p><footer>'+esc(p.by)+'</footer></blockquote>'}).join("");
+  var rel=A.filter(function(x){return x.id!==a.id&&x.sec===a.sec}).sort(byAgo);
+  A.filter(function(x){return x.id!==a.id&&x.sec!==a.sec&&x.sec!=="opiniao"}).sort(byAgo).forEach(function(x){if(rel.length<3)rel.push(x)});
+  rel=rel.slice(0,3);
+  var on=saved.has(a.id);
+  var hero=op?"":'<figure class="hero fig">'+pic(a)+'<figcaption>'+esc(a.cap)+'<span>Ilustração</span></figcaption></figure>';
+  return '<article>'+
+   '<header class="ah"><p class="kicker">'+L(a.sec,esc(s.name),"hl")+'</p><h1>'+esc(a.t)+'</h1><p class="deck">'+esc(a.d)+'</p>'+
+   '<div class="byline"><div><strong>Por '+esc(a.by)+'</strong>'+when(a)+' · '+mins(a)+' min de leitura</div>'+
+   '<div class="acts"><button class="btn" type="button" data-act="fs-" aria-label="Diminuir o texto">A−</button><button class="btn" type="button" data-act="fs+" aria-label="Aumentar o texto">A+</button>'+
+   '<button class="btn" type="button" data-act="save" data-id="'+a.id+'" aria-pressed="'+on+'">'+(on?"Salvo":"Salvar")+'</button><button class="btn" type="button" data-act="copy">Copiar link</button></div></div></header>'+
+   hero+'<div class="abody">'+body+'</div>'+
+   '<p class="note">Este texto faz parte de uma edição de demonstração. Pessoas, instituições e acontecimentos são fictícios.</p></article>'+
+   '<section class="more"><h2 class="hd"><span>Leia também</span></h2><div class="cols3">'+rel.map(function(x){return op||x.sec==="opiniao"?sText(x):sMedia(x)}).join("")+'</div></section>';
+}
+
+/* ---------- navegação ---------- */
+var app=$("#app"),route="",isArticle=false;
+function parse(h){h=(h||"").replace(/^#/,"");return h||"inicio"}
+function render(){
+  var html="",active=route,m=/^materia-(.+)$/.exec(route);isArticle=false;
+  if(m&&get(m[1])){var a=get(m[1]);html=articlePage(a);active=a.sec;isArticle=true}
+  else if(route==="salvos"){html=savedPage()}
+  else if(secOf(route)){html=secPage(route)}
+  else{route="inicio";active="inicio";html=home()}
+  app.innerHTML=html;
+  [].forEach.call(document.querySelectorAll("#navlist a"),function(l){if(l.dataset.r===active)l.setAttribute("aria-current","page");else l.removeAttribute("aria-current")});
+  $("#prog").style.width="0";
+  window.scrollTo(0,0);
+}
+function show(r){
+  route=r;render();
+  try{if(location.hash!=="#"+route)location.hash=route}catch(e){}
+}
+window.addEventListener("hashchange",function(){var r=parse(location.hash);if(r!==route){route=r;render()}});
+
+/* ---------- sobreposições ---------- */
+var lastFocus=null;
+function openOv(id){
+  closeOv();lastFocus=document.activeElement;
+  var o=$("#"+id);o.hidden=false;document.body.style.overflow="hidden";
+  var f=o.querySelector("input");if(f)f.focus();
+}
+function closeOv(){
+  var any=false;[].forEach.call(document.querySelectorAll(".overlay"),function(o){if(!o.hidden)any=true;o.hidden=true});
+  document.body.style.overflow="";
+  if(any&&lastFocus&&lastFocus.focus)lastFocus.focus();
+  lastFocus=null;
+}
+function runSearch(q){
+  var box=$("#sres"),nq=norm(q.trim());
+  if(!nq){box.innerHTML='<p class="hint">Digite um assunto, um nome ou uma seção. Sugestões:</p>'+["b1","t1","s2","k1"].map(function(i){var a=get(i);return '<div class="sr-item"><p class="kicker">'+esc(secOf(a.sec).name)+'</p><h3>'+L(mat(a),esc(a.t),"hl")+'</h3></div>'}).join("");return}
+  var ws=nq.split(/\s+/);
+  var res=A.filter(function(a){return ws.every(function(w){return a._idx.indexOf(w)>=0})}).sort(byAgo).slice(0,12);
+  box.innerHTML='<p class="hint">'+res.length+(res.length===1?" resultado":" resultados")+' para “'+esc(q.trim())+'”</p>'+
+    (res.length?res.map(function(a){return '<div class="sr-item"><p class="kicker">'+esc(secOf(a.sec).name)+' · '+ago(a.ago)+'</p><h3>'+L(mat(a),esc(a.t),"hl")+'</h3><p>'+esc(a.d)+'</p></div>'}).join(""):'<p class="empty">Nada encontrado. Tente uma palavra mais curta ou o nome de uma seção.</p>');
+}
+function subForm(){
+  $("#subbody").innerHTML='<h2 id="subt">Newsletters do Diário do Farol</h2><p>Escolha o que quer receber e informe seu e-mail.</p>'+
+  '<form id="subform" novalidate><div><label for="em">E-mail</label><input id="em" type="email" placeholder="voce@exemplo.com" autocomplete="email" required></div>'+
+  '<fieldset><legend>Edições</legend>'+
+  '<label class="chk" for="n1"><input id="n1" type="checkbox" checked> Manhã: resumo do dia, de segunda a sexta</label>'+
+  '<label class="chk" for="n2"><input id="n2" type="checkbox"> Economia: o que mudou nos preços e no crédito</label>'+
+  '<label class="chk" for="n3"><input id="n3" type="checkbox"> Cultura: indicações para o fim de semana</label></fieldset>'+
+  '<p id="suberr" class="err" role="alert"></p>'+
+  '<div class="actions"><button class="btn btn--solid" type="submit">Cadastrar</button><button class="btn" type="button" data-act="close">Agora não</button></div>'+
+  '<p class="fine">Site de demonstração: o endereço fica salvo apenas neste navegador e nenhuma mensagem é enviada.</p></form>';
+}
+var toastT;
+function toast(msg){var t=$("#toast");t.textContent=msg;t.classList.add("on");clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove("on")},2600)}
+
+/* ---------- tema, tamanho do texto, salvos ---------- */
+var root=document.documentElement;
+function dark(){var t=root.dataset.theme;return t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches}
+function themeLabel(){var l=dark()?"Modo claro":"Modo escuro";$("#themebtn").textContent=l;$("#themebtn2").textContent=l}
+var th=store.get("farol-theme",null);if(th)root.dataset.theme=th;
+try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",themeLabel)}catch(e){}
+var SIZES=[1.02,1.15,1.28,1.42,1.58],fsi=store.get("farol-fs",1);
+if(typeof fsi!=="number"||fsi<0||fsi>4)fsi=1;
+function applyFs(){root.style.setProperty("--fs",SIZES[fsi]+"rem")}
+var saved=new Set(store.get("farol-saved",[]));
+function savedBadge(){var s=$("#sc");if(s)s.textContent=saved.size?"("+saved.size+")":""}
+
+/* ---------- eventos ---------- */
+document.addEventListener("click",function(e){
+  var link=e.target.closest("a[data-r]");
+  if(link){if(e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;e.preventDefault();var wasOpen=!$("#search").hidden||!$("#sub").hidden;if(wasOpen)closeOv();show(link.dataset.r);return}
+  if(e.target.classList&&e.target.classList.contains("overlay")){closeOv();return}
+  var b=e.target.closest("[data-act]");if(!b)return;
+  var act=b.dataset.act;
+  if(act==="search"){openOv("search");runSearch($("#q").value)}
+  else if(act==="sub"){subForm();openOv("sub")}
+  else if(act==="close"){closeOv()}
+  else if(act==="theme"){var t=dark()?"light":"dark";root.dataset.theme=t;store.set("farol-theme",t);themeLabel()}
+  else if(act==="fs+"){fsi=Math.min(4,fsi+1);store.set("farol-fs",fsi);applyFs()}
+  else if(act==="fs-"){fsi=Math.max(0,fsi-1);store.set("farol-fs",fsi);applyFs()}
+  else if(act==="save"){
+    var id=b.dataset.id,on=saved.has(id);
+    if(on)saved.delete(id);else saved.add(id);
+    store.set("farol-saved",Array.from(saved));
+    b.textContent=on?"Salvar":"Salvo";b.setAttribute("aria-pressed",String(!on));
+    savedBadge();toast(on?"Removida dos salvos":"Matéria salva neste navegador");
+  }
+  else if(act==="copy"){
+    var url=location.href;
+    try{navigator.clipboard.writeText(url).then(function(){toast("Link copiado")},function(){toast("Não foi possível copiar. Use o endereço do navegador.")})}
+    catch(err){toast("Não foi possível copiar. Use o endereço do navegador.")}
+  }
+});
+document.addEventListener("input",function(e){if(e.target.id==="q")runSearch(e.target.value)});
+document.addEventListener("submit",function(e){
+  if(e.target.id!=="subform")return;
+  e.preventDefault();
+  var em=$("#em").value.trim(),err=$("#suberr");
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){err.textContent="Informe um e-mail válido, como nome@exemplo.com.";$("#em").focus();return}
+  var picks=[["n1","Manhã"],["n2","Economia"],["n3","Cultura"]].filter(function(p){return $("#"+p[0]).checked}).map(function(p){return p[1]});
+  if(!picks.length){err.textContent="Marque pelo menos uma edição.";return}
+  store.set("farol-sub",{email:em,editions:picks});
+  $("#subbody").innerHTML='<h2 id="subt">Cadastro registrado</h2><p>'+esc(em)+' ficou salvo para: '+esc(picks.join(", "))+'. Como esta é uma edição de demonstração, nenhuma mensagem será enviada.</p><div class="actions" style="margin-top:14px"><button class="btn btn--solid" type="button" data-act="close">Fechar</button></div>';
+});
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"){closeOv();return}
+  var tag=(e.target.tagName||"").toLowerCase();
+  if(e.key==="/"&&tag!=="input"&&tag!=="textarea"){e.preventDefault();openOv("search");runSearch($("#q").value)}
+});
+window.addEventListener("scroll",function(){
+  if(!isArticle)return;
+  var h=document.documentElement,max=h.scrollHeight-h.clientHeight;
+  $("#prog").style.width=(max>0?Math.max(0,Math.min(100,h.scrollTop/max*100)):0)+"%";
+},{passive:true});
+
+/* ---------- início ---------- */
+$("#today").textContent=NOW.toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).replace(/^./,function(c){return c.toUpperCase()});
+$("#navlist").innerHTML='<li>'+L("inicio","Início")+'</li>'+SECS.map(function(s){return '<li>'+L(s.id,s.name)+'</li>'}).join("")+'<li>'+L("salvos",'Salvos <span id="sc"></span>')+'</li>';
+$("#fsecs").innerHTML=SECS.map(function(s){return '<li>'+L(s.id,s.name)+'</li>'}).join("");
+applyFs();themeLabel();savedBadge();
+route=parse(location.hash);render();
+})();
+</script>
+
+</body></html>
