@@ -1,0 +1,187 @@
+
+:root {
+  --fundo: #fdfdfc;
+  --texto: #141414;
+  --texto-suave: #555555;
+  --linha: #dcdcd8;
+  --destaque: #1c4f82;
+}
+
+body.escuro {
+  --fundo: #131415;
+  --texto: #ecebe7;
+  --texto-suave: #a9a8a2;
+  --linha: #34373a;
+  --destaque: #86b6e8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.5;
+}
+
+main, .busca, .menu, .topo, .rodape {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.topo {
+  text-align: center;
+  padding-top: 16px;
+  padding-bottom: 12px;
+  border-bottom: 3px double var(--texto);
+  max-width: none;
+}
+
+.logo {
+  font-size: 3rem;
+  margin: 8px 0 0;
+}
+
+.slogan {
+  margin: 0;
+  font-style: italic;
+  color: var(--texto-suave);
+}
+
+#btn-tema {
+  float: right;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  background: none;
+  color: var(--texto);
+  border: 1px solid var(--linha);
+  padding: 6px 12px;
+}
+
+button:hover {
+  border-color: var(--texto);
+}
+
+.menu {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.menu button.ativo {
+  background: var(--destaque);
+  color: var(--fundo);
+  border-color: var(--destaque);
+}
+
+.busca input {
+  width: 100%;
+  font-size: 1rem;
+  padding: 10px;
+  background: transparent;
+  color: var(--texto);
+  border: 1px solid var(--linha);
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.card {
+  border-top: 2px solid var(--texto);
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.card:hover h2 {
+  text-decoration: underline;
+}
+
+.card.destaque {
+  grid-column: 1 / -1;
+}
+
+.card.destaque h2 {
+  font-size: 2.2rem;
+}
+
+.card h2 {
+  margin: 4px 0 8px;
+  font-size: 1.3rem;
+}
+
+.secao {
+  margin: 0;
+  font: bold 0.75rem Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--destaque);
+}
+
+.resumo {
+  color: var(--texto-suave);
+  margin: 0 0 8px;
+}
+
+.autor {
+  font: 0.8rem Arial, sans-serif;
+  color: var(--texto-suave);
+  margin: 0;
+}
+
+.vazio {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--texto-suave);
+}
+
+.materia {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+.materia h1 {
+  font-size: 2.4rem;
+  line-height: 1.1;
+  margin: 8px 0;
+}
+
+.materia .resumo {
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+.materia p.paragrafo {
+  font-size: 1.15rem;
+  line-height: 1.7;
+}
+
+.rodape {
+  max-width: none;
+  margin-top: 40px;
+  padding-top: 16px;
+  padding-bottom: 24px;
+  border-top: 3px double var(--texto);
+  text-align: center;
+  font: 0.85rem Arial, sans-serif;
+  color: var(--texto-suave);
+}
+
+@media (max-width: 600px) {
+  .logo { font-size: 2.2rem; }
+  .card.destaque h2 { font-size: 1.6rem; }
+  .materia h1 { font-size: 1.8rem; }
+}
